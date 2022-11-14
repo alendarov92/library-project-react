@@ -18,26 +18,29 @@ function App() {
             <Router>
                 <div id="container">
                     <Header />
-                    <Routes>
-                        <Route path="/" element={<Dashboard />} />
+                    <main id="site-content">
 
-                        <Route path="/login" element={<Login />} />
+                        <Routes>
+                            <Route path="/" element={<Dashboard />} />
 
-
-                        <Route path="/register" element={<Register />} />
-
-
-                        <Route path="/details" element={<Details />} />
+                            <Route path="/login" element={<Login />} />
 
 
-                        <Route path="/create" element={<Create />} />
+                            <Route path="/register" element={<Register />} />
 
 
-                        <Route path="/edit" element={<Edit />} />
+                            <Route path="/details" element={<Details />} />
 
 
-                        <Route path="/myBooks" element={<MyBooks />} />
-                    </Routes>
+                            <Route path="/create" element={<Create />} />
+
+
+                            <Route path="/edit" element={<Edit />} />
+
+
+                            <Route path="/myBooks" element={<MyBooks />} />
+                        </Routes>
+                    </main>
 
                     <footer id="site-footer">
                         <p>@OnlineBooksLibrary</p>

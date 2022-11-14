@@ -9,7 +9,7 @@ function Details() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3030//data/books/:${cards._id}`)
+        fetch(`http://localhost:3030/data/books/:${cards._id}`)
             .then(res => res.json())
             .then(result => {
                 console.log(result);

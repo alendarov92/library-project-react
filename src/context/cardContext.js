@@ -1,13 +1,12 @@
 import React, { createContext, useEffect, useState  } from 'react'
-
+import * as bookServices from '../services/bookSevices'
 export const CardContext = createContext();
 
 export const CardProvider = props => {
     const [cards, setCards] = useState({});
 
     useEffect(() => {
-        fetch('http://localhost:3030/data/books')
-            .then(res => res.json())
+        bookServices.getAll()
             .then(result => {
                 setCards(result)
             })
