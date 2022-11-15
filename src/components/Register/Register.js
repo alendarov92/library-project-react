@@ -28,7 +28,7 @@ function Register() {
 
     }
     return (
-        <div>
+        
             <section id="register-page" className="register">
                 <form id="register-form" action="" method="" onSubmit={onSubmit}>
                     <fieldset>
@@ -69,7 +69,7 @@ function Register() {
                     </fieldset>
                 </form>
             </section>
-        </div>
+       
     )
 }
 

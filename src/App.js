@@ -1,7 +1,7 @@
 import React from "react";
 
-import { CardProvider } from "./context/cardContext";
-import { BrowserRouter as Router, Route, Routes, } from "react-router-dom";
+// import { CardProvider } from "./context/cardContext";
+import { BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
 
 import { useEffect, useState } from 'react'
 import * as bookServices from './services/bookSevices'
@@ -17,6 +17,7 @@ import Register from "./components/Register/Register";
 
 function App() {
     const [books, setBooks] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         bookServices.getAll()
@@ -24,6 +25,15 @@ function App() {
                 setBooks(result)
             })
     }, []);
+
+    const createBook = (bookData) => {
+        setBooks(state => [
+            ...state,
+            bookData,
+        ])
+
+        navigate('/myBooks')
+    }
 
     return (
         // <CardProvider>
@@ -39,13 +49,13 @@ function App() {
 
                         <Route path="/register" element={<Register />} />
 
-                        <Route path="/create" element={<Create />} />
+                        <Route path="/create" element={<Create createBook={createBook} />} />
 
                         <Route path="/edit" element={<Edit />} />
 
                         <Route path="/myBooks" element={<MyBooks books={books} />} />
 
-                        <Route path="/myBooks/:bookId" element={<Details books={books}/>} />
+                        <Route path="/myBooks/:bookId" element={<Details books={books} />} />
                     </Routes>
                 </main>
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Edit() {
     return (
-        <div>
+        
             <section id="edit-page" className="edit">
                 <form id="edit-form" action="#" method="">
                     <fieldset>
@@ -59,7 +59,7 @@ function Edit() {
                     </fieldset>
                 </form>
             </section>
-        </div>
+        
     )
 }
 

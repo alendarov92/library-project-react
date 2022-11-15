@@ -39,7 +39,7 @@ function Login() {
 
 
     return (
-        <div>
+        
             <section id="login-page" className="login">
                 <form id="login-form" action="" method="" onSubmit={onSubmit}>
                     <fieldset>
@@ -65,7 +65,7 @@ function Login() {
                     </fieldset>
                 </form>
             </section>
-        </div>
+       
     )
 }
 

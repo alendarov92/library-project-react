@@ -4,7 +4,7 @@ import BookItem from './BookItem/BookItem';
 
 function MyBooks({books}) {
     return (
-        <div>
+        
             <section id="my-books-page" className="my-books">
                 <h1>My Books</h1>
                 {/* Display ul: with list-items for every user's books (if any) */}
@@ -17,7 +17,7 @@ function MyBooks({books}) {
                 </ul>
                
             </section>
-        </div>
+        
     )
 }
 
