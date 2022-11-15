@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-function BookItem({ book }) {
+
+function AllBooks({book}) {
     return (
         <div>
             <li className="otherBooks">
@@ -18,4 +19,4 @@ function BookItem({ book }) {
     )
 }
 
-export default BookItem;
+export default AllBooks

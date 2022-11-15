@@ -1,8 +1,13 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+
+
 
 function Details({ books }) {
     
-    const book = Object.values(books)
+    const { bookId } = useParams();
+
+    const book = books.find(x => x._id === bookId)
 
     return (
         <div>

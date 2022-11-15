@@ -27,38 +27,33 @@ function App() {
 
     return (
         // <CardProvider>
-            <Router>
-                <div id="container">
-                    <Header />
-                    <main id="site-content">
+        <Router>
+            <div id="container">
+                <Header />
+                <main id="site-content">
 
-                        <Routes>
-                            <Route path="/" element={<Dashboard books={books} />} />
+                    <Routes>
+                        <Route path="/" element={<Dashboard books={books} />} />
 
-                            <Route path="/login" element={<Login />} />
+                        <Route path="/login" element={<Login />} />
 
+                        <Route path="/register" element={<Register />} />
 
-                            <Route path="/register" element={<Register />} />
+                        <Route path="/create" element={<Create />} />
 
+                        <Route path="/edit" element={<Edit />} />
 
-                            <Route path="/details" element={<Details books={books}/>} />
+                        <Route path="/myBooks" element={<MyBooks books={books} />} />
 
+                        <Route path="/myBooks/:bookId" element={<Details books={books}/>} />
+                    </Routes>
+                </main>
 
-                            <Route path="/create" element={<Create />} />
-
-
-                            <Route path="/edit" element={<Edit />} />
-
-
-                            <Route path="/myBooks" element={<MyBooks books={books} />} />
-                        </Routes>
-                    </main>
-
-                    <footer id="site-footer">
-                        <p>@OnlineBooksLibrary</p>
-                    </footer>
-                </div>
-            </Router>
+                <footer id="site-footer">
+                    <p>@OnlineBooksLibrary</p>
+                </footer>
+            </div>
+        </Router>
 
         // </CardProvider>
     );
