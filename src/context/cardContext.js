@@ -1,19 +1,11 @@
-import React, { createContext, useEffect, useState  } from 'react'
-import * as bookServices from '../services/bookSevices'
-export const CardContext = createContext();
 
-export const CardProvider = props => {
-    const [cards, setCards] = useState({});
+// export const CardContext = createContext();
 
-    useEffect(() => {
-        bookServices.getAll()
-            .then(result => {
-                setCards(result)
-            })
-    }, [])
-    return (
-        <CardContext.Provider value={[cards, setCards]}>
-            {props.children}
-        </CardContext.Provider>
-    )
-}
+// export const CardProvider = props => {
+    
+//     return (
+//         <CardContext.Provider >
+//             {props.children}
+//         </CardContext.Provider>
+//     )
+// }

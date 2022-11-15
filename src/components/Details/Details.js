@@ -1,31 +1,17 @@
-import React, { useContext } from 'react'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { CardContext } from '../../context/cardContext'
+import React from 'react'
 
-function Details() {
-    const [cards, setCards] = useContext(CardContext)
-    const [details, setDetails] = useState()
-
-
-    useEffect(() => {
-        fetch(`http://localhost:3030/data/books/:${cards._id}`)
-            .then(res => res.json())
-            .then(result => {
-                console.log(result);
-            setDetails(result)
-        })
-    },[])
-
+function Details({ books }) {
     
+    const book = Object.values(books)
+
     return (
         <div>
             <section id="details-page" className="details">
                 <div className="book-information">
-                    <h3>{details.title }</h3>
-                    <p className="type">Type: { details.type}</p>
+                    <h3>{book.title }</h3>
+                    <p className="type">Type: { book.type}</p>
                     <p className="img">
-                        <img src={details.imageUrl} />
+                        <img src={book.imageUrl} />
                     </p>
                     <div className="actions">
                         {/* Edit/Delete buttons ( Only for creator of this book )  */}
@@ -51,7 +37,7 @@ function Details() {
                 <div className="book-description">
                     <h3>Description:</h3>
                     <p>
-                       {details.description}
+                       {book.description}
                     </p>
                 </div>
             </section>
