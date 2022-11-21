@@ -1,43 +1,29 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/authContext'
 // import { useNavigate } from 'react-router-dom'
-
 import { login } from '../../services/userServices'
 
 const Login = () => {
+    const navigate = useNavigate()
+
+    const { loginHeandler } = useContext(AuthContext)
 
     const onSubmit = (e) => {
         e.preventDefault()
 
-        const { email, password } = Object.fromEntries(new FormData(e.target))
+        const { email, password } = Object.fromEntries(new FormData(e.target));
         
         login(email, password)
             .then(authData => {
-            console.log(authData);
-        })
+                loginHeandler(authData);
+                navigate('/');
+            })
+            .catch(() => {
+                navigate('/register');
+            })
 
-        // fetch(url, {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         email,
-                
-        //         password
-        //     })
-        // })
-        //     .then(res => res.json())
-        //     .then(user => {
-        //         console.log(user);
-        //         localStorage.setItem('_id', user._id)
-        //         localStorage.setItem('username', user.username)
-        //         localStorage.setItem('accessToken', user.accessToken)
-        //     })
-        //     .catch(err => {
-        //         console.error('err')
-        //     })
-
-    }
+    };
 
 
     return (

@@ -1,10 +1,11 @@
 import React from "react";
 
 // import { CardProvider } from "./context/cardContext";
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import { useEffect, useState } from 'react'
 import * as bookServices from './services/bookSevices'
+import { AuthContext } from "./context/authContext";
 
 import Create from "./components/Create/Create";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -17,16 +18,20 @@ import Register from "./components/Register/Register";
 
 function App() {
     const [books, setBooks] = useState([]);
-    
-    
-    
+    const [userData, setUserData] = useState({});
+
+    const loginHeandler = (authData) => {
+        setUserData(authData)
+    }
+
+
     useEffect(() => {
         bookServices.getAll()
-        .then(result => {
-            setBooks(result)
-        })
+            .then(result => {
+                setBooks(result)
+            })
     }, []);
-    
+
     const createBook = (bookData) => {
         fetch('http://localhost:3030/data/books', {
             method: 'POST',
@@ -37,49 +42,51 @@ function App() {
                 bookData
             }
         })
-        .then((response) => response.json())
-        .then(result => {
-            console.log(result);
-            setBooks(state => [
-                ...state,
-                result,
-            ])
+            .then((response) => response.json())
+            .then(result => {
+                console.log(result);
+                setBooks(state => [
+                    ...state,
+                    result,
+                ])
             })
-            
-            
-        }
-        
-        return (
-            // <CardProvider>
-        <Router>
-            <div id="container">
-                <Header />
-                <main id="site-content">
 
-                    <Routes>
-                        <Route path="/" element={<Dashboard books={books} />} />
 
-                        <Route path="/login" element={<Login />} />
+    }
 
-                        <Route path="/register" element={<Register />} />
+    return (
+        <AuthContext.Provider value={{userData, loginHeandler}}>
 
-                        <Route path="/create" element={<Create createBook={createBook} />} />
+            <Router>
+                <div id="container">
+                    <Header />
+                    <main id="site-content">
 
-                        <Route path="/edit" element={<Edit />} />
+                        <Routes>
+                            <Route path="/" element={<Dashboard books={books} />} />
 
-                        <Route path="/myBooks" element={<MyBooks books={books} />} />
+                            <Route path="/login" element={<Login />} />
 
-                        <Route path="/myBooks/:bookId" element={<Details books={books} />} />
-                    </Routes>
-                </main>
+                            <Route path="/register" element={<Register />} />
 
-                <footer id="site-footer">
-                    <p>@OnlineBooksLibrary</p>
-                </footer>
-            </div>
-        </Router>
+                            <Route path="/create" element={<Create createBook={createBook} />} />
 
-        // </CardProvider>
+                            <Route path="/edit" element={<Edit />} />
+
+                            <Route path="/myBooks" element={<MyBooks books={books} />} />
+
+                            <Route path="/myBooks/:bookId" element={<Details books={books} />} />
+                        </Routes>
+                    </main>
+
+                    <footer id="site-footer">
+                        <p>@OnlineBooksLibrary</p>
+                    </footer>
+                </div>
+            </Router>
+
+        </AuthContext.Provider>
+
     );
 }
 
