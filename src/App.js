@@ -1,7 +1,7 @@
 import React from "react";
 
 // import { CardProvider } from "./context/cardContext";
-import { BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import { useEffect, useState } from 'react'
 import * as bookServices from './services/bookSevices'
@@ -17,26 +17,40 @@ import Register from "./components/Register/Register";
 
 function App() {
     const [books, setBooks] = useState([]);
-    const navigate = useNavigate();
-
+    
+    
+    
     useEffect(() => {
         bookServices.getAll()
-            .then(result => {
-                setBooks(result)
-            })
+        .then(result => {
+            setBooks(result)
+        })
     }, []);
-
+    
     const createBook = (bookData) => {
-        setBooks(state => [
-            ...state,
-            bookData,
-        ])
-
-        navigate('/myBooks')
-    }
-
-    return (
-        // <CardProvider>
+        fetch('http://localhost:3030/data/books', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: {
+                bookData
+            }
+        })
+        .then((response) => response.json())
+        .then(result => {
+            console.log(result);
+            setBooks(state => [
+                ...state,
+                result,
+            ])
+            })
+            
+            
+        }
+        
+        return (
+            // <CardProvider>
         <Router>
             <div id="container">
                 <Header />

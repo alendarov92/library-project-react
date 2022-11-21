@@ -1,39 +1,41 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
+// import { useNavigate } from 'react-router-dom'
 
-function Login() {
+import { login } from '../../services/userServices'
 
-    const url = 'http://localhost:3030/users/login'
-
-    
+const Login = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
 
         const { email, password } = Object.fromEntries(new FormData(e.target))
         
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                email,
-                
-                password
-            })
+        login(email, password)
+            .then(authData => {
+            console.log(authData);
         })
-            .then(res => res.json())
-            .then(user => {
-                console.log(user);
-                localStorage.setItem('_id', user._id)
-                localStorage.setItem('username', user.username)
-                localStorage.setItem('accessToken', user.accessToken)
-            })
-            .catch(err => {
-                console.error('err')
-            })
+
+        // fetch(url, {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         email,
+                
+        //         password
+        //     })
+        // })
+        //     .then(res => res.json())
+        //     .then(user => {
+        //         console.log(user);
+        //         localStorage.setItem('_id', user._id)
+        //         localStorage.setItem('username', user.username)
+        //         localStorage.setItem('accessToken', user.accessToken)
+        //     })
+        //     .catch(err => {
+        //         console.error('err')
+        //     })
 
     }
 

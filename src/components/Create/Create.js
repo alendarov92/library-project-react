@@ -15,22 +15,7 @@ function Create({ createBook }) {
         createBook(bookData)
     }
     // useEffect(() => {
-    //     fetch('http://localhost:3030/data/books', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: {
-    //             title,
-    //             description,
-    //             imageUrl,
-    //             type
-    //         }
-    //     })
-    //         .then((response) => response.json())
-    //         .then(result => {
-    //             console.log(result);
-    //         })
+        
     // }, [])
 
 
