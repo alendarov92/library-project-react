@@ -1,32 +1,36 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/authContext'
+import * as userServices from '../../services/userServices'
 
-function Register() {
 
-    const url = 'http://localhost:3030/users/register'
+const Register = () => {
+
+    // const url = 'http://localhost:3030/users/register'
+
+    const navigate = useNavigate()
+
+    const { registerHeandler } = useContext(AuthContext)
 
     const onSubmit = (e) => {
         e.preventDefault()
 
-        const { email, password, confirmPass } = Object.fromEntries(new FormData(e.target))
+        const { email, password, confirmPass } = Object.fromEntries(new FormData(e.target));
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: {
-                email,
-                password,
-                confirmPass
-            }
-        })
-            .then(res => res.json())
-            .then(result => {
-                console.log(result);
+        // if (email !== confirmPass) {
+        //     return
+        // }
+        
+        userServices.register(email, password, confirmPass)
+            .then(authData => {
+                registerHeandler(authData);
+                navigate('/');
+            })
+            .catch(() => {
+                navigate('/register');
             })
 
-
-    }
+    };
     return (
         
             <section id="register-page" className="register">

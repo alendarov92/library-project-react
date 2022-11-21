@@ -24,6 +24,9 @@ function App() {
     const loginHeandler = (authData) => {
         setUserData(authData)
     }
+    const registerHeandler = (authData) => {
+        setUserData(authData)
+    }
     const logoutHeandler = () => {
         setUserData({});
     }
@@ -59,7 +62,7 @@ function App() {
     }
 
     return (
-        <AuthContext.Provider value={{ userData, loginHeandler, logoutHeandler }}>
+        <AuthContext.Provider value={{ userData, loginHeandler, logoutHeandler, registerHeandler }}>
 
             <Router>
                 <div id="container">
