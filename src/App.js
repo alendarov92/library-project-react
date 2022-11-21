@@ -15,6 +15,7 @@ import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
 import MyBooks from "./components/My-Books/MyBooks";
 import Register from "./components/Register/Register";
+import Logout from "./components/Logout/Logout";
 
 function App() {
     const [books, setBooks] = useState([]);
@@ -22,6 +23,9 @@ function App() {
 
     const loginHeandler = (authData) => {
         setUserData(authData)
+    }
+    const logoutHeandler = () => {
+        setUserData({});
     }
 
 
@@ -55,7 +59,7 @@ function App() {
     }
 
     return (
-        <AuthContext.Provider value={{userData, loginHeandler}}>
+        <AuthContext.Provider value={{ userData, loginHeandler, logoutHeandler }}>
 
             <Router>
                 <div id="container">
@@ -66,6 +70,8 @@ function App() {
                             <Route path="/" element={<Dashboard books={books} />} />
 
                             <Route path="/login" element={<Login />} />
+
+                            <Route path="/logout" element={<Logout />} />
 
                             <Route path="/register" element={<Register />} />
 
