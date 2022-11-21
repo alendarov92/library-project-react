@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/authContext'
-// import { useNavigate } from 'react-router-dom'
-import { login } from '../../services/userServices'
+import * as userServices  from '../../services/userServices'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -14,7 +13,7 @@ const Login = () => {
 
         const { email, password } = Object.fromEntries(new FormData(e.target));
         
-        login(email, password)
+        userServices.login(email, password)
             .then(authData => {
                 loginHeandler(authData);
                 navigate('/');
