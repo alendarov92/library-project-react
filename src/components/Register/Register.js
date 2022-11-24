@@ -6,24 +6,18 @@ import * as userServices from '../../services/userServices'
 
 const Register = () => {
 
-    // const url = 'http://localhost:3030/users/register'
-
     const navigate = useNavigate()
 
-    const { registerHeandler } = useContext(AuthContext)
+    const { loginHeandler } = useContext(AuthContext)
 
     const onSubmit = (e) => {
         e.preventDefault()
 
         const { email, password, confirmPass } = Object.fromEntries(new FormData(e.target));
-
-        // if (email !== confirmPass) {
-        //     return
-        // }
         
         userServices.register(email, password, confirmPass)
             .then(authData => {
-                registerHeandler(authData);
+                loginHeandler(authData);
                 navigate('/');
             })
             .catch(() => {

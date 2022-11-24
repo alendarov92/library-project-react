@@ -16,17 +16,18 @@ import Login from "./components/Login/Login";
 import MyBooks from "./components/My-Books/MyBooks";
 import Register from "./components/Register/Register";
 import Logout from "./components/Logout/Logout";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
     const [books, setBooks] = useState([]);
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useLocalStorage('userData', {});
 
     const loginHeandler = (authData) => {
         setUserData(authData)
     }
-    const registerHeandler = (authData) => {
-        setUserData(authData)
-    }
+    // const registerHeandler = (authData) => {
+    //     setUserData(authData)
+    // }
     const logoutHeandler = () => {
         setUserData({});
     }
@@ -62,7 +63,7 @@ function App() {
     }
 
     return (
-        <AuthContext.Provider value={{ userData, loginHeandler, logoutHeandler, registerHeandler }}>
+        <AuthContext.Provider value={{ userData, loginHeandler, logoutHeandler }}>
 
             <Router>
                 <div id="container">
