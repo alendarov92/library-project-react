@@ -1,11 +1,12 @@
 import React from "react";
 
 // import { CardProvider } from "./context/cardContext";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from 'react'
 import * as bookServices from './services/bookSevices'
 import { AuthContext } from "./context/authContext";
+import { BookContext } from "./context/bookContext";
 
 import Create from "./components/Create/Create";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -21,6 +22,8 @@ import useLocalStorage from "./hooks/useLocalStorage";
 function App() {
     const [books, setBooks] = useState([]);
     const [userData, setUserData] = useLocalStorage('userData', {});
+
+    // const navigate = useNavigate()
 
     const loginHeandler = (authData) => {
         setUserData(authData)
@@ -41,26 +44,26 @@ function App() {
     }, []);
 
     const createBook = (bookData) => {
-        fetch('http://localhost:3030/data/books', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: {
-                bookData
-            }
-        })
-            .then((response) => response.json())
-            .then(result => {
-                console.log(result);
-                setBooks(state => [
-                    ...state,
-                    result,
-                ])
-            })
 
-
+        setBooks(state => [
+            ...state,
+            bookData,
+        ])
+        // navigate('/')
     }
+
+    const bookEdit = (bookId, bookData) => {
+        setBooks(state => state.map(x => x._id === bookId ? bookData : x))
+    }
+
+    const deleteBook = (bookId) => {
+        setBooks(state => {
+            console.log(state);
+
+        })
+    }
+
+
 
     return (
         <AuthContext.Provider value={{ userData, loginHeandler, logoutHeandler }}>
@@ -68,26 +71,29 @@ function App() {
             <Router>
                 <div id="container">
                     <Header />
-                    <main id="site-content">
+                    <BookContext.Provider value={{ books, createBook,bookEdit }}>
 
-                        <Routes>
-                            <Route path="/" element={<Dashboard books={books} />} />
+                        <main id="site-content">
 
-                            <Route path="/login" element={<Login />} />
+                            <Routes>
+                                <Route path="/" element={<Dashboard />} />
 
-                            <Route path="/logout" element={<Logout />} />
+                                <Route path="/login" element={<Login />} />
 
-                            <Route path="/register" element={<Register />} />
+                                <Route path="/logout" element={<Logout />} />
 
-                            <Route path="/create" element={<Create createBook={createBook} />} />
+                                <Route path="/register" element={<Register />} />
 
-                            <Route path="/edit" element={<Edit />} />
+                                <Route path="/create" element={<Create />} />
 
-                            <Route path="/myBooks" element={<MyBooks books={books} />} />
+                                <Route path="/myBooks/:bookId/edit" element={<Edit />} />
 
-                            <Route path="/myBooks/:bookId" element={<Details books={books} />} />
-                        </Routes>
-                    </main>
+                                <Route path="/myBooks" element={<MyBooks />} />
+
+                                <Route path="/myBooks/:bookId" element={<Details />} />
+                            </Routes>
+                        </main>
+                    </BookContext.Provider>
 
                     <footer id="site-footer">
                         <p>@OnlineBooksLibrary</p>

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { BookContext } from '../../context/bookContext';
 import AllBooks from './AllBooks/AllBooks';
 
-function Dashboard({ books }) {
-
+function Dashboard() {
+    const { books } = useContext(BookContext);
 
     return (
         <div>

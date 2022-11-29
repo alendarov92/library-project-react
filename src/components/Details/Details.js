@@ -1,36 +1,55 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { BookContext } from '../../context/bookContext';
+import * as bookServices from '../../services/bookSevices'
 
 
+function Details() {
 
-function Details({ books }) {
-    
+    const [currentBook, setCurrentBook] = useState({})
+    const { books } = useContext(BookContext)
+
     const { bookId } = useParams();
 
     const book = books.find(x => x._id === bookId)
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        bookServices.getOne(bookId)
+            .then(result => {
+            setCurrentBook(result)
+        })
+    },[])
+
+    const deleteHeandler = () => {
+        bookServices.remove(bookId)
+        navigate('/myBooks')
+        
+    }
 
     return (
         <div>
             <section id="details-page" className="details">
                 <div className="book-information">
-                    <h3>{book.title }</h3>
-                    <p className="type">Type: { book.type}</p>
+                    <h3>{currentBook.title}</h3>
+                    <p className="type">Type: {currentBook.type}</p>
                     <p className="img">
-                        <img src={book.imageUrl} />
+                        <img src={currentBook.imageUrl} />
                     </p>
                     <div className="actions">
                         {/* Edit/Delete buttons ( Only for creator of this book )  */}
-                        <a className="button" href="#">
+                        <Link className="button" to={`/myBooks/${currentBook._id}/edit`}>
                             Edit
-                        </a>
-                        <a className="button" href="#">
+                        </Link>
+                        <Link className="button" onClick={deleteHeandler}>
                             Delete
-                        </a>
+                        </Link>
                         {/* Bonus */}
                         {/* Like button ( Only for logged-in users, which is not creators of the current book ) */}
-                        <a className="button" href="#">
+                        <Link className="button" to={'#'}>
                             Like
-                        </a>
+                        </Link>
                         {/* ( for Guests and Users )  */}
                         <div className="likes">
                             <img className="hearts" src="/images/heart.png" />
@@ -42,7 +61,7 @@ function Details({ books }) {
                 <div className="book-description">
                     <h3>Description:</h3>
                     <p>
-                       {book.description}
+                        {currentBook.description}
                     </p>
                 </div>
             </section>

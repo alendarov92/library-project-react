@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { BookContext } from '../../context/bookContext';
 
 import BookItem from './BookItem/BookItem';
 
-function MyBooks({books}) {
+function MyBooks() {
+    const { books } = useContext(BookContext)
     return (
         
             <section id="my-books-page" className="my-books">

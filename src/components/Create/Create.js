@@ -1,22 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react'
-
-function Create({ createBook }) {
-
-    // const [newBook, steNewBook] = useState([])
-    // const [cards, setCards] = useContext(CardContext)
+import { BookContext } from '../../context/bookContext'
+import * as bookServices from '../../services/bookSevices'
 
 
+function Create() {
+
+    const { createBook } = useContext(BookContext)
     const createHeandler = (e) => {
+
         e.preventDefault()
         const bookData = Object.fromEntries(new FormData(e.target));
 
-        console.log(bookData);
-
-        createBook(bookData)
+        bookServices.create(bookData)
+            .then(result => {
+                createBook(result)
+            })
     }
-    // useEffect(() => {
-        
-    // }, [])
 
 
     return (

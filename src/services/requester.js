@@ -1,15 +1,26 @@
 // This is used to make all the requset's to be taken from one place.
 
 export const request = async (method, url, data) => {
+
     try {
+        const user = localStorage.getItem('userData')
+        const userData = JSON.parse(user || {})
+
+        let headers = {}
+
+        if (userData.accessToken) {
+            headers['X-Authorization'] = userData.accessToken
+        }
+
         let buildRequest;
 
         if (method === 'GET') {
-            buildRequest = fetch(url)
+            buildRequest = fetch(url, headers)
         } else {
             buildRequest = fetch(url, {
                 method,
                 headers: {
+                    ...headers,
                     'content-type': 'application/json'
                 },
                 body: JSON.stringify(data)
