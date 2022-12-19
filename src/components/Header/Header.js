@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/authContext'
 
 function Header() {
-    const { userData } = useContext(AuthContext)
+    const { auth } = useContext(AuthContext)
     return (
         <div>
             <header id="site-header">
@@ -13,10 +13,10 @@ function Header() {
                     <section className="navbar-dashboard">
                         <Link to="/">Dashboard</Link>
 
-                        {userData.email
+                        {auth.email
                             ? <div id="user">
                                 <span>
-                                    Welcome: {userData.email}
+                                    Welcome: {auth.email}
                                 </span>
                                 <Link className="button" to="/myBooks">
                                     My Books

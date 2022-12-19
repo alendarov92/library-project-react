@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-route
 
 import { useEffect, useState } from 'react'
 import * as bookServices from './services/bookSevices'
-import { AuthContext } from "./context/authContext";
+import { AuthProvider } from "./context/authContext";
 import { BookContext } from "./context/bookContext";
 
 import Create from "./components/Create/Create";
@@ -21,19 +21,11 @@ import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
     const [books, setBooks] = useState([]);
-    const [userData, setUserData] = useLocalStorage('userData', {});
+    // const [userData, setUserData] = useLocalStorage('userData', {});
 
     // const navigate = useNavigate()
 
-    const loginHeandler = (authData) => {
-        setUserData(authData)
-    }
-    // const registerHeandler = (authData) => {
-    //     setUserData(authData)
-    // }
-    const logoutHeandler = () => {
-        setUserData({});
-    }
+    
 
 
     useEffect(() => {
@@ -66,9 +58,9 @@ function App() {
 
 
     return (
-        <AuthContext.Provider value={{ userData, loginHeandler, logoutHeandler }}>
+        <AuthProvider>
 
-            <Router>
+            
                 <div id="container">
                     <Header />
                     <BookContext.Provider value={{ books, createBook,bookEdit }}>
@@ -99,9 +91,9 @@ function App() {
                         <p>@OnlineBooksLibrary</p>
                     </footer>
                 </div>
-            </Router>
+            
 
-        </AuthContext.Provider>
+        </AuthProvider>
 
     );
 }
